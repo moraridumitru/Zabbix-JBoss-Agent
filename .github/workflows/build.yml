@@ -1,6 +1,5 @@
 name: Build Zabbix JBoss Agent
 
-# Permite rularea manuală
 on:
   workflow_dispatch:
 
@@ -9,28 +8,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Clonăm codul sursă
       - name: Checkout source
         uses: actions/checkout@v3
 
-      # 2️⃣ Setăm JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      # 3️⃣ Instalăm Maven
       - name: Install Maven
         run: sudo apt-get update && sudo apt-get install -y maven
 
-      # 4️⃣ Build proiect cu Maven
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 5️⃣ Salvăm artifact-ul pentru descărcare
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: zabbix-jboss-agent
           path: target/*.jar
